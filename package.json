@@ -1,0 +1,30 @@
+{
+  "name": "settings-bill-expressjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sixolisiwe/settings-bill-expressjs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  },
+  "bugs": {
+    "url": "https://github.com/sixolisiwe/settings-bill-expressjs/issues"
+  },
+  "homepage": "https://github.com/sixolisiwe/settings-bill-expressjs#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0"
+  }
+}

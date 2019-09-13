@@ -1,0 +1,120 @@
+module.exports = function SettingsBill() {
+    var costOfSms;
+    var costOfCall;
+
+    var criticalLevel;
+    var warningLevel;
+
+    var listOfACtions = []
+
+    function updateSettings(settingsList) {
+        console.log(settingsList);
+        
+        costOfSms = Number(settingsList.costOfSms);
+        costOfCall = Number(settingsList.costOfCall);
+        warningLevel = settingsList.warningLevel;
+        criticalLevel = settingsList.criticalLevel;
+    }
+
+    function getUpdatedSettings() {
+        return {
+            costOfSms,
+            costOfCall,
+            warningLevel,
+            criticalLevel
+        }
+    }
+
+
+    function recordedAction(action) {
+
+        let cost = 0;
+        if (action === 'sms') {
+            cost = costOfSms;
+        } else if (action === 'call') {
+            cost = costOfCall;
+        }
+
+        listOfACtions.push({
+            type: action,
+            cost,
+            timestamp: new Date()
+        });
+    }
+
+    function actions() {
+        return listOfACtions;
+    }
+
+    function actionsFor(type) {
+        const filteredActions = [];
+
+        // loop through all the entries in the action list 
+        for (let i = 0; i < listOfACtions.length; i++) {
+            const action = listOfACtions[i];
+            // check this is the type we are doing the total for 
+            if (action.type === type) {
+                // add the action to the list
+                filteredActions.push(action);
+            }
+        }
+
+        return filteredActions;
+
+        // return actionList.filter((action) => action.type === type);
+    }
+
+    function getTotal(type) {
+        let total = 0;
+        // loop through all the entries in the action list 
+        for (let i = 0; i < listOfACtions.length; i++) {
+            const action = listOfACtions[i];
+            // check this is the type we are doing the total for 
+            if (action.type === type) {
+                // if it is add the total to the list
+                total += action.cost;
+            }
+        }
+        return total;
+    }
+
+    function grandTotal() {
+        return getTotal('sms') + getTotal('call');
+    }
+
+
+
+    function totals() {
+        let smsTotal = getTotal('sms')
+        let callTotal = getTotal('call')
+        return {
+            smsTotal,
+            callTotal,
+            grandTotal: grandTotal()
+        }
+    }
+
+    function hasReachedWarningLevel() {
+        const total = grandTotal();
+        const reachedWarningLevel = total >= warningLevel &&
+            total < criticalLevel;
+
+        return reachedWarningLevel;
+    }
+
+    function hasReachedCriticalLevel() {
+        const total = grandTotal();
+        return total >= criticalLevel;
+    }
+
+    return {
+        updateSettings,
+        getUpdatedSettings,
+        recordedAction,
+        actions,
+        actionsFor,
+        totals,
+        hasReachedWarningLevel,
+        hasReachedCriticalLevel
+    }
+}
