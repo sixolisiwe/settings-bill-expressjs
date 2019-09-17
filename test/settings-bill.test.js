@@ -27,7 +27,7 @@ describe('settingsBill', function () {
         settingsBill.recordedAction('call');
         settingsBill.recordedAction('call');
         settingsBill.recordedAction('sms');
-        assert.equal(settingsBill.actionsFor('call').length, 2git);
+        assert.equal(settingsBill.actionsFor('call').length, 2);
 });   
 it('should count the total amount of sms selected', function(){
     settingsBill.recordedAction('sms');
