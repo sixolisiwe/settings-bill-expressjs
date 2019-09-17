@@ -15,19 +15,7 @@ describe('settingsBill', function () {
         assert.deepEqual(settingsBill.actionsFor('call').length, 0);
     });
 
-    it('should check if the warningLevel input box is empty', function () {
-        var totalSetting = settingsBill.hasReachedWarningLevel('');
-      
-        assert.deepEqual(settingsBill.hasReachedWarningLevel('warningLevel'), false);
-    });
-
-    it('should check if the criticalLevel input box is empty', function () {
-        var totalSetting = settingsBill.hasReachedCriticalLevel('');
-       
-        assert.deepEqual(settingsBill.hasReachedCriticalLevel('criticalLevel'), false);
-    });
-
-
+   
     it('should count the total amount of calls selected', function(){
     settingsBill.recordedAction('call');
     settingsBill.recordedAction('call');
