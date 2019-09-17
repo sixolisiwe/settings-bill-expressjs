@@ -8,8 +8,8 @@ module.exports = function SettingsBill() {
     var listOfACtions = []
 
     function updateSettings(settingsList) {
-        console.log(settingsList);
-        
+
+
         costOfSms = Number(settingsList.costOfSms);
         costOfCall = Number(settingsList.costOfCall);
         warningLevel = settingsList.warningLevel;
@@ -29,12 +29,13 @@ module.exports = function SettingsBill() {
     function recordedAction(action) {
 
         let cost = 0;
+        if(!stopBtn()){
         if (action === 'sms') {
             cost = costOfSms;
         } else if (action === 'call') {
             cost = costOfCall;
         }
-
+    }
         listOfACtions.push({
             type: action,
             cost,
@@ -66,16 +67,20 @@ module.exports = function SettingsBill() {
 
     function getTotal(type) {
         let total = 0;
+
         // loop through all the entries in the action list 
         for (let i = 0; i < listOfACtions.length; i++) {
             const action = listOfACtions[i];
+
             // check this is the type we are doing the total for 
             if (action.type === type) {
                 // if it is add the total to the list
                 total += action.cost;
+
             }
         }
         return total;
+
     }
 
     function grandTotal() {
@@ -85,27 +90,34 @@ module.exports = function SettingsBill() {
 
 
     function totals() {
+
         let smsTotal = getTotal('sms')
         let callTotal = getTotal('call')
         return {
             smsTotal,
             callTotal,
             grandTotal: grandTotal()
+
         }
     }
 
-    function hasReachedWarningLevel() {
-        const total = grandTotal();
-        const reachedWarningLevel = total >= warningLevel &&
-            total < criticalLevel;
+    function colorIndicator() {
 
-        return reachedWarningLevel;
+        if (grandTotal() >= warningLevel && grandTotal() < criticalLevel) {
+            return "warning";
+        }
+        if (grandTotal() >= criticalLevel) {
+            return "danger";
+        }
+
+
     }
 
-    function hasReachedCriticalLevel() {
-        const total = grandTotal();
-        return total >= criticalLevel;
+    function stopBtn() {
+        return grandTotal() >= criticalLevel;
+
     }
+
 
     return {
         updateSettings,
@@ -114,7 +126,7 @@ module.exports = function SettingsBill() {
         actions,
         actionsFor,
         totals,
-        hasReachedWarningLevel,
-        hasReachedCriticalLevel
+        colorIndicator,
+        stopBtn
     }
 }

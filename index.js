@@ -7,9 +7,20 @@ const app = express(); //instance of app
 
 const settingsBill = SettingsBill()
 
-app.engine('handlebars', exphbs({
-    defaultLayout: 'main'
-})); //config as line 8
+const hbs = exphbs.create({
+    defaultLayout: 'main'  ,
+
+
+    // helpers: {
+    //     changeColor: function(){
+        
+    //     return color;
+    //     }
+    // }
+})
+
+app.engine('handlebars', hbs.engine); //config as line 8
+
 app.set('view engine', 'handlebars'); //configure handlebars
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
@@ -22,16 +33,19 @@ app.use(bodyParser.json()) //config as per line13
 app.use(express.static('public'))
 
 app.get('/', function (req, res) {
+    console.log(settingsBill.colorIndicator());
+    
     res.render('index', {
         setting: settingsBill.getUpdatedSettings(),
-        total: settingsBill.totals()
+        total: settingsBill.totals(),
+        changeColor: settingsBill.colorIndicator(),
+        
+        
+
     }) //ref to hbshtml and pass object with value to it
 
 })
 
-// app.get('/', function(req, res){
-//     res.render('index', {settings: "settingsBill.getUpdatedSettings()"}
-// })
 
 app.post('/settings', function (req, res) { //route 2
 
@@ -41,7 +55,7 @@ app.post('/settings', function (req, res) { //route 2
         warningLevel,
         criticalLevel
     } = req.body
-
+ 
 
     settingsBill.updateSettings({
         costOfCall,
@@ -49,14 +63,14 @@ app.post('/settings', function (req, res) { //route 2
         warningLevel,
         criticalLevel
     })
-    console.log(settingsBill.getUpdatedSettings());
+    // console.log(settingsBill.getUpdatedSettings());
 
     res.redirect('/')
 
 })
 app.post('/action', function (req, res) { // rote 3
     settingsBill.recordedAction(req.body.actionType)
-    console.log(req.body.actionType);
+    // console.log(req.body.actionType);
 
     res.redirect('/')
 
@@ -78,6 +92,6 @@ app.get('/actions/:type', function (req, res) { // route 5
 
 const PORT = process.env.PORT || 3011; //config port to use default and define new port
 app.listen(PORT, function () {
-    console.log("App listening at port:", PORT);
+console.log("App listening at port:", PORT);
 
 })

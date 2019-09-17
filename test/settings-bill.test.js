@@ -4,49 +4,49 @@ describe('settingsBill', function () {
     const settingsBill = SettingsBill();
 
     it('should check if the sms input box is empty', function () {
-        var total = settingsBill.getTotal();
-        settingsBill.getTotal('smsTotal');
-        assert.deepEqual(settingsBill.getTotal(total), 0);
+        var total = settingsBill.recordedAction('');
+      
+        assert.deepEqual(settingsBill.actionsFor('sms').length, 0);
     });
 
     it('should check if the call input box is empty', function () {
-        var total = settingsBill.getTotal();
-        settingsBill.getTotal('callTotal');
-        assert.deepEqual(settingsBill.getTotal(total), 0);
+        var total = settingsBill.recordedAction('');
+      
+        assert.deepEqual(settingsBill.actionsFor('call').length, 0);
     });
 
     it('should check if the warningLevel input box is empty', function () {
-        var totalSetting = settingsBill.getWarning();
-        settingsBill.getWarning('warningLevel');
-        assert.deepEqual(settingsBill.getWarning(totalSetting), true);
+        var totalSetting = settingsBill.hasReachedWarningLevel('');
+      
+        assert.deepEqual(settingsBill.hasReachedWarningLevel('warningLevel'), false);
     });
 
     it('should check if the criticalLevel input box is empty', function () {
-        var totalSetting = settingsBill.getCritical();
-        settingsBill.getCritical('criticalLevel');
-        assert.deepEqual(settingsBill.getCritical(totalSetting), true);
+        var totalSetting = settingsBill.hasReachedCriticalLevel('');
+       
+        assert.deepEqual(settingsBill.hasReachedCriticalLevel('criticalLevel'), false);
     });
 
 
     it('should count the total amount of calls selected', function(){
-    settingsBill.setCallTotal(4.00);
-    settingsBill.setCallTotal(4.00);
-    assert.equal(settingsBill.getCallTotal(), 8.00);
+    settingsBill.recordedAction('call');
+    settingsBill.recordedAction('call');
+    assert.equal(settingsBill.actionsFor('call').length, 2);
    
         
     });
     it('should count the total amount of calls selected', function(){
-        settingsBill.setCallTotal(4.00);
-        settingsBill.setCallTotal(4.00);
-        settingsBill.setSmsTotal(2.00);
-        assert.equal(settingsBill.getCallTotal(), 16.00);
+        settingsBill.recordedAction('call');
+        settingsBill.recordedAction('call');
+        settingsBill.recordedAction('sms');
+        assert.equal(settingsBill.actionsFor('call').length, 4);
 });   
 it('should count the total amount of sms selected', function(){
-    settingsBill.setCallTotal(4.00);
-    settingsBill.setCallTotal(4.00);
-    settingsBill.setSmsTotal(2.00);
-    settingsBill.setSmsTotal(2.00);
-    assert.equal(settingsBill.getSmsTotal(), 6.00);
+    settingsBill.recordedAction('sms');
+    settingsBill.recordedAction('call');
+    settingsBill.recordedAction('sms');
+    settingsBill.recordedAction('sms');
+    assert.equal(settingsBill.actionsFor('sms').length, 4);
 });
 
 describe('use set values', function(){
@@ -54,74 +54,94 @@ it('should return the total call cost set for two calls at 4.00 each', function(
     
     let settingsBill = SettingsBill();
 
-    settingsBill.setCallCost(4.00);
-    settingsBill.setSmsCost(2.00);
+    settingsBill.updateSettings({
+        costOfCall: 4.00,
+        costOfSms: 2.00,
+        warningLevel: 20.00,
+        criticalLevel: 40.00,
+    });
+ 
    
 
-    settingsBill.makeCall();
-    settingsBill.makeCall();
-    assert.equal(settingsBill.getTotalCost(), 8.00);
-    assert.equal(settingsBill.getTotalCallCost(), 8.00);
-    assert.equal(settingsBill.getTotalSmsCost(), 0.00);
+    // settingsBill.makeCall();
+    // settingsBill.makeCall();
+    assert.deepEqual({
+        costOfCall: 4.00,
+        costOfSms: 2.00,
+        warningLevel: 20.00,
+        criticalLevel: 40.00,
+    }, settingsBill.getUpdatedSettings())
+    // assert.equal(settingsBill.getTotalCallCost(), 8.00);
+    // assert.equal(settingsBill.getTotalSmsCost(), 0.00);
 });
 
-it('should return the total call cost set for two calls at 6.00 each', function(){
+it('should return the total call cost set for calls at 6.00 each', function(){
     
     let settingsBill = SettingsBill();
 
-    settingsBill.setCallCost(6.00);
-    settingsBill.setSmsCost(2.00);
+    settingsBill.updateSettings({
+        costOfCall: 6.00,
+        costOfSms: 2.00,
+        warningLevel: 20.00,
+        criticalLevel: 40.00,
+    });
+ 
    
 
-    settingsBill.makeCall();
-    settingsBill.makeCall();
-    assert.equal(settingsBill.getTotalCost(), 12.00);
-    assert.equal(settingsBill.getTotalCallCost(), 12.00);
-    assert.equal(settingsBill.getTotalSmsCost(), 0.00);
+    // settingsBill.makeCall();
+    // settingsBill.makeCall();
+    assert.deepEqual({
+        costOfCall: 6.00,
+        costOfSms: 2.00,
+        warningLevel: 20.00,
+        criticalLevel: 40.00,
+    }, settingsBill.getUpdatedSettings())
+    // assert.equal(settingsBill.getTotalCallCost(), 8.00);
+    // assert.equal(settingsBill.getTotalSmsCost(), 0.00);
 });
-
 it('should return the total sms cost set for two smses at 2.00 each', function(){
     
     let settingsBill = SettingsBill();
 
-    settingsBill.setCallCost(6.00);
-    settingsBill.setSmsCost(2.00);
+    settingsBill.updateSettings({
+        costOfCall: 4.00,
+        costOfSms: 2.00,
+        warningLevel: 20.00,
+        criticalLevel: 40.00,
+    });
+ 
    
 
-    settingsBill.makeSms();
-    settingsBill.makeSms();
-    assert.equal(settingsBill.getTotalCost(), 4.00);
-    assert.equal(settingsBill.getTotalCallCost(), 0.00);
-    assert.equal(settingsBill.getTotalSmsCost(), 4.00);
+    // settingsBill.makeCall();
+    // settingsBill.makeCall();
+    assert.deepEqual({
+        costOfCall: 4.00,
+        costOfSms: 2.00,
+        warningLevel: 20.00,
+        criticalLevel: 40.00,
+    }, settingsBill.getUpdatedSettings())
+    // assert.equal(settingsBill.getTotalCallCost(), 8.00);
+    // assert.equal(settingsBill.getTotalSmsCost(), 0.00);
 });
-it('should return the total sms cost set for two smses at 5.00 each', function(){
-    
-    let settingsBill = SettingsBill();
-
-    settingsBill.setCallCost(6.00);
-    settingsBill.setSmsCost(5.00);
-   
-
-    settingsBill.makeSms();
-    settingsBill.makeSms();
-    assert.equal(settingsBill.getTotalCost(), 10.00);
-    assert.equal(settingsBill.getTotalCallCost(), 0.00);
-    assert.equal(settingsBill.getTotalSmsCost(), 10.00);
+settingsBill.updateSettings({
+    costOfCall: 10.00,
+    costOfSms: 5.00,
+    warningLevel: 20.00,
+    criticalLevel: 40.00,
 });
-it('should return the total sms and call cost set for two smses at 5.00 each and one call at 6.00 each', function(){
-    
-    let settingsBill = SettingsBill();
 
-    settingsBill.setCallCost(6.00);
-    settingsBill.setSmsCost(5.00);
-   
 
-    settingsBill.makeSms();
-    settingsBill.makeSms();
-    settingsBill.makeCall();
-    assert.equal(settingsBill.getTotalCost(), 16.00);
-    assert.equal(settingsBill.getTotalCallCost(), 6.00);
-    assert.equal(settingsBill.getTotalSmsCost(), 10.00);
+
+// settingsBill.makeCall();
+// settingsBill.makeCall();
+assert.deepEqual({
+    costOfCall: 10.00,
+    costOfSms: 5.00,
+    warningLevel: 20.00,
+    criticalLevel: 40.00,
+}, settingsBill.getUpdatedSettings())
+// assert.equal(settingsBill.getTotalCallCost(), 8.00);
+// assert.equal(settingsBill.getTotalSmsCost(), 0.00);
 });
-});
+
 });
