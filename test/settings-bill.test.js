@@ -27,14 +27,14 @@ describe('settingsBill', function () {
         settingsBill.recordedAction('call');
         settingsBill.recordedAction('call');
         settingsBill.recordedAction('sms');
-        assert.equal(settingsBill.actionsFor('call').length, 4);
+        assert.equal(settingsBill.actionsFor('call').length, 2git);
 });   
 it('should count the total amount of sms selected', function(){
     settingsBill.recordedAction('sms');
     settingsBill.recordedAction('call');
     settingsBill.recordedAction('sms');
     settingsBill.recordedAction('sms');
-    assert.equal(settingsBill.actionsFor('sms').length, 4);
+    assert.equal(settingsBill.actionsFor('sms').length, 3);
 });
 
 describe('use set values', function(){
