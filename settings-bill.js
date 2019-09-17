@@ -27,7 +27,9 @@ module.exports = function SettingsBill() {
 
 
     function recordedAction(action) {
-
+        if(stopBtn()){ 
+            return "danger";
+        }
         let cost = 0;
         if(!stopBtn()){
         if (action === 'sms') {
