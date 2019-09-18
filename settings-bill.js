@@ -30,6 +30,7 @@ module.exports = function SettingsBill() {
 
 
     function recordedAction(action) {
+        var now = moment(new Date)
         if(stopBtn()){ 
             return "danger";
         }
@@ -45,7 +46,7 @@ module.exports = function SettingsBill() {
         listOfACtions.push({
             type: action,
             cost,
-            timestamp: moment().fromNow(new Date)
+            timestamp: now.format("HH:mm:ss")
             
         });
         
