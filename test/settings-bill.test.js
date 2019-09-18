@@ -56,16 +56,14 @@ describe('settingsBill', function () {
 
 
 
-            // settingsBill.makeCall();
-            // settingsBill.makeCall();
+          
             assert.deepEqual({
                 costOfCall: 4.00,
                 costOfSms: 2.00,
                 warningLevel: 20.00,
                 criticalLevel: 40.00,
             }, settingsBill.getUpdatedSettings())
-            // assert.equal(settingsBill.getTotalCallCost(), 8.00);
-            // assert.equal(settingsBill.getTotalSmsCost(), 0.00);
+            
         });
 
         it('should return the total call cost set for calls at 6.00 each', function () {
@@ -81,16 +79,13 @@ describe('settingsBill', function () {
 
 
 
-            // settingsBill.makeCall();
-            // settingsBill.makeCall();
             assert.deepEqual({
                 costOfCall: 6.00,
                 costOfSms: 2.00,
                 warningLevel: 20.00,
                 criticalLevel: 40.00,
             }, settingsBill.getUpdatedSettings())
-            // assert.equal(settingsBill.getTotalCallCost(), 8.00);
-            // assert.equal(settingsBill.getTotalSmsCost(), 0.00);
+            
         });
         it('should return the total sms cost set at 2.00', function () {
             
@@ -105,16 +100,14 @@ describe('settingsBill', function () {
 
 
 
-            // settingsBill.makeCall();
-            // settingsBill.makeCall();
+           
             assert.deepEqual({
                 costOfCall: 4.00,
                 costOfSms: 2.00,
                 warningLevel: 20.00,
                 criticalLevel: 40.00,
             }, settingsBill.getUpdatedSettings())
-            // assert.equal(settingsBill.getTotalCallCost(), 8.00);
-            // assert.equal(settingsBill.getTotalSmsCost(), 0.00);
+           
         });
 
         it('should return the total sms cost set at 5.00', function () {
@@ -128,16 +121,14 @@ describe('settingsBill', function () {
 
 
 
-        // settingsBill.makeCall();
-        // settingsBill.makeCall();
+       
         assert.deepEqual({
             costOfCall: 10.00,
             costOfSms: 5.00,
             warningLevel: 20.00,
             criticalLevel: 40.00,
         }, settingsBill.getUpdatedSettings())
-        // assert.equal(settingsBill.getTotalCallCost(), 8.00);
-        // assert.equal(settingsBill.getTotalSmsCost(), 0.00);
+   
     });
 
 });

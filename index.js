@@ -10,30 +10,22 @@ const app = express(); //instance of app
 
 
 
-
 const settingsBill = SettingsBill()
 
 const hbs = exphbs.create({
     defaultLayout: 'main'  ,
 
 
-    // helpers: {
-    //     changeColor: function(){
-        
-    //     return color;
-    //     }
-    // }
 })
 
 app.engine('handlebars', hbs.engine); //config as line 8
 
 app.set('view engine', 'handlebars'); //configure handlebars
-// parse application/x-www-form-urlencoded
+
 app.use(bodyParser.urlencoded({
     extended: false
-})) // config body-parser
+})) 
 
-// parse application/json
 app.use(bodyParser.json()) //config as per line13
 
 app.use(express.static('public'))
@@ -48,7 +40,7 @@ app.get('/', function (req, res) {
         
         
 
-    }) //ref to hbshtml and pass object with value to it
+    }) 
 
 })
 
@@ -69,15 +61,13 @@ app.post('/settings', function (req, res) { //route 2
         warningLevel,
         criticalLevel
     })
-    // console.log(settingsBill.getUpdatedSettings());
 
     res.redirect('/')
 
 })
 app.post('/action', function (req, res) { // rote 3
     settingsBill.recordedAction(req.body.actionType)
-    // console.log(req.body.actionType);
-
+ 
     res.redirect('/')
 
 })
