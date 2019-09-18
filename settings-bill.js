@@ -1,5 +1,3 @@
-var moment = require('moment');
-
 module.exports = function SettingsBill() {
  
     var costOfSms;
@@ -30,7 +28,7 @@ module.exports = function SettingsBill() {
 
 
     function recordedAction(action) {
-        var now = moment(new Date)
+        
         if(stopBtn()){ 
             return "danger";
         }
@@ -46,7 +44,7 @@ module.exports = function SettingsBill() {
         listOfACtions.push({
             type: action,
             cost,
-            timestamp: now.format("HH:mm:ss")
+            timestamp: new Date
             
         });
         

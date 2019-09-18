@@ -3,6 +3,9 @@ const bodyParser = require('body-parser') //import bp
 const exphbs = require('express-handlebars'); //reference express-hbs after download
 
 const SettingsBill = require('./settings-bill')
+var moment = require('moment');
+moment().format()
+
 const app = express(); //instance of app
 
 
@@ -80,15 +83,23 @@ app.post('/action', function (req, res) { // rote 3
 })
 
 app.get('/actions', function (req, res) { // route 4
+    let time = settingsBill.actions()
+for (const iterator of time) {
+    iterator.ago= moment(iterator.timestamp).fromNow()
+}
     res.render('actions', {
-        action: settingsBill.actions()
+        action: time
     })
 })
 
 app.get('/actions/:type', function (req, res) { // route 5
     const actionType= req.params.type;
+    let time = settingsBill.actionsFor(actionType)
+    for (const iterator of time) {
+        iterator.ago= moment(iterator.timestamp).fromNow()
+    }
     res.render('actions', {
-        action: settingsBill.actionsFor(actionType)
+        action: time
     })
 })
 
