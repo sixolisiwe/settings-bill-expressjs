@@ -1,11 +1,11 @@
 
 module.exports = function SettingsBill() {
  
-    var costOfSms;
-    var costOfCall;
+    var costOfSms = 0;
+    var costOfCall= 0;
 
-    var criticalLevel;
-    var warningLevel;
+    var criticalLevel= 0;
+    var warningLevel = 0;
 
     var listOfACtions = []
 
@@ -111,7 +111,8 @@ module.exports = function SettingsBill() {
     }
 
     function colorIndicator() {
-
+        
+ if(criticalLevel !== 0){ 
         if (grandTotal() >= warningLevel && grandTotal() < criticalLevel) {
             return "warning";
         }
@@ -119,9 +120,13 @@ module.exports = function SettingsBill() {
             return "danger";
         }
 
+    
 
-    }
+    }else {
+    return " notCol"
 
+}
+ }
     function stopBtn() {
         return grandTotal() >= criticalLevel;
 
