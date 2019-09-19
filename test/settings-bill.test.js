@@ -12,35 +12,11 @@ describe('settingsBill', function () {
 
     it('should check if the call input box is empty', function () {
         const settingsBill = SettingsBill();
-        var total = settingsBill.recordedAction('');
-        total = settingsBill.actionsFor('call')
-        assert.deepEqual(settingsBill.actionsFor(total).length, 0);
+        settingsBill.recordedAction('');
+       
+        assert.deepEqual(settingsBill.actionsFor('call').length, 0);
     });
 
-
-    it('should count the total amount of calls selected', function () {
-        const settingsBill = SettingsBill();
-        settingsBill.recordedAction('call');
-        settingsBill.recordedAction('call');
-        assert.equal(settingsBill.actionsFor('call').length, 2);
-
-
-    });
-    it('should count the total amount of calls selected', function () {
-        const settingsBill = SettingsBill();
-        settingsBill.recordedAction('call');
-        settingsBill.recordedAction('call');
-        settingsBill.recordedAction('sms');
-        assert.equal(settingsBill.actionsFor('call').length, 2);
-    });
-    it('should count the total amount of sms selected', function () {
-        const settingsBill = SettingsBill();
-        settingsBill.recordedAction('sms');
-        settingsBill.recordedAction('call');
-        settingsBill.recordedAction('sms');
-        settingsBill.recordedAction('sms');
-        assert.equal(settingsBill.actionsFor('sms').length, 3);
-    });
 
     describe('use set values', function () {
         it('should return the total call cost set for two calls at 4.00 each', function () {
