@@ -41,7 +41,7 @@ module.exports = function SettingsBill() {
             cost = costOfCall;
         }
     }
-    if(action !== undefined){
+    if(action !== undefined ){
         listOfACtions.push({
             type: action,
             cost,
@@ -112,7 +112,7 @@ module.exports = function SettingsBill() {
 
     function colorIndicator() {
         
- if(criticalLevel !== 0){ 
+ if(grandTotal() !== 0){ 
         if (grandTotal() >= warningLevel && grandTotal() < criticalLevel) {
             return "warning";
         }
